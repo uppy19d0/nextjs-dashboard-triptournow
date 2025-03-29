@@ -1,49 +1,60 @@
-import { NextAuthOptions, User } from 'next-auth'
-import CredentialsProvider from 'next-auth/providers/credentials'
-import { getDictionary } from '@/locales/dictionary'
+import { NextAuthOptions, User } from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
+import { getDictionary } from "@/locales/dictionary";
+import { apiService } from "@/app/api/apis"; // Asegúrate de importar apiService correctamente
 
 export const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ user, token }) {
       if (user) {
-        return { ...token, user: { ...user as User } }
+        return { ...token, user: { ...(user as User) } };
       }
-
-      return token
+      return token;
     },
     async session({ session, token }) {
-      return { ...session, user: token.user }
+      return { ...session, user: token.user };
     },
   },
   providers: [
     CredentialsProvider({
       credentials: {
-        username: { type: 'string' },
-        password: { type: 'password' },
+        username: { type: "string" },
+        password: { type: "password" },
       },
       async authorize(credentials) {
         if (!credentials) {
-          return null
-        }
-        const { username, password } = credentials
-
-        // Replace with real authentication here
-        const ok = username === 'Username' && password === 'Password'
-
-        const dict = await getDictionary()
-
-        if (!ok) {
-          throw new Error(dict.login.message.auth_failed)
+          return null;
         }
 
-        return {
-          id: 1,
-          name: 'Name',
-          username: 'Username',
-          email: 'user@email.com',
-          avatar: '/assets/img/avatars/8.jpg',
+        const { username, password } = credentials;
+
+        try {
+          const data = await apiService.post<{
+            status: string;
+            user: { firstName: string; lastName: string; email: string };
+            token: string;
+          }>("/login", { email: username, password });
+
+          if (data.status === "success") {
+            return {
+              id: 1,
+              name: `${data.user.firstName} ${data.user.lastName}`,
+              username: "Username",
+              email: data.user.email,
+              avatar: "/assets/img/avatars/8.jpg",
+              token: data.token,
+            };
+          } else {
+            const dict = await getDictionary();
+            throw new Error(
+              dict.login.message.auth_failed || "Invalid credentials"
+            );
+          }
+        } catch (error) {
+          console.error("Login error:", error);
+          throw new Error("Failed to authenticate");
         }
       },
     }),
   ],
-}
+};

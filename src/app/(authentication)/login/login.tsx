@@ -20,6 +20,7 @@ export default function Login({ callbackUrl }: { callbackUrl: string }) {
   const dict = useDictionary()
 
   const login = async (formData: FormData) => {
+
     setSubmitting(true)
 
     try {
@@ -83,7 +84,7 @@ export default function Login({ callbackUrl }: { callbackUrl: string }) {
             disabled={submitting}
             placeholder={dict.login.form.username}
             aria-label="Username"
-            defaultValue="Username"
+            defaultValue="cristianzabala2014@gmail.com"
           />
         </InputGroup>
 
@@ -101,7 +102,7 @@ export default function Login({ callbackUrl }: { callbackUrl: string }) {
             disabled={submitting}
             placeholder={dict.login.form.password}
             aria-label="Password"
-            defaultValue="Password"
+            defaultValue="password"
           />
         </InputGroup>
 
