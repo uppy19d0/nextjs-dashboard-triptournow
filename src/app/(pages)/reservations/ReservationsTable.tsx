@@ -133,6 +133,7 @@ export default function ReservationsTable({ reservations }: Props) {
               ×
             </button>
             <h3 className="text-xl font-semibold mb-4">Detalle del Reservaciones</h3>
+            
             <div className="space-y-2 text-sm">
               {/* <p><strong>Nombre:</strong> {selectedReservation.firstName} {selectedUser.lastName}</p>
               <p><strong>Email:</strong> {selectedReservation.email}</p>

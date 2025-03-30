@@ -1,12 +1,12 @@
 'use client';
 
 import { getPosts } from '@/app/api/posts/posts';
-import { Post } from '@/models/posts/posts';
+import { Posts } from '@/models/posts/posts';
 import { useEffect, useState } from 'react'
 import PostTable from './PostTable';
 
 export default function Page() {
-  const [posts, setPosts] = useState<Post[]>([])
+  const [posts, setPosts] = useState<Posts[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
