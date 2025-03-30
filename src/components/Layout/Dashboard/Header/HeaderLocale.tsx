@@ -28,12 +28,15 @@ export default function HeaderLocale({ currentLocale }: { currentLocale: string 
         <DropdownItem active={locale === 'en'} onClick={() => changeLocale('en')}>
           English
         </DropdownItem>
-        <DropdownItem active={locale === 'ja'} onClick={() => changeLocale('ja')}>
+        <DropdownItem active={locale === 'es'} onClick={() => changeLocale('es')}>
+          Español
+        </DropdownItem>
+        {/* <DropdownItem active={locale === 'ja'} onClick={() => changeLocale('ja')}>
           日本語
         </DropdownItem>
         <DropdownItem active={locale === 'zh'} onClick={() => changeLocale('zh')}>
           简体中文
-        </DropdownItem>
+        </DropdownItem> */}
       </DropdownMenu>
     </Dropdown>
   )

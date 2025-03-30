@@ -1,7 +1,6 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios'
 import { getSession } from 'next-auth/react'
 
-// Crea una instancia de Axios con configuración inicial
 const api: AxiosInstance = axios.create({
   baseURL: 'https://triptournow.com/api/V1', // Base URL de tu API
   headers: {
@@ -9,17 +8,19 @@ const api: AxiosInstance = axios.create({
   },
 })
 
+
 // Interceptor para agregar el token en cada solicitud
 api.interceptors.request.use(
   async (config) => {
     try {
+      console.log('config', config)
       // Si es una solicitud de login, no intentamos obtener la sesión
       if (config.url?.includes("/login")) {
         return config; // Devolvemos la configuración sin modificar
       }
 
       const session = await getSession(); // Esperamos la sesión
-
+      console.log("!!!TOKEN!!!", session?.user?.token)
       if (session?.user?.token) {
         config.headers.Authorization = `Bearer ${session.user.token}`;
       }
@@ -41,6 +42,7 @@ const handleError = (error: any) => {
 
 // Métodos predeterminados para API requests
 export const apiService = {
+
   get: async <T>(url: string, params?: object): Promise<T> => api.get<T>(url, { params }).then(handleResponse).catch(handleError),
 
   post: async <T>(url: string, data?: object): Promise<T> => api.post<T>(url, data).then(handleResponse).catch(handleError),
@@ -48,6 +50,7 @@ export const apiService = {
   put: async <T>(url: string, data?: object): Promise<T> => api.put<T>(url, data).then(handleResponse).catch(handleError),
 
   delete: async <T>(url: string): Promise<T> => api.delete<T>(url).then(handleResponse).catch(handleError),
+  
 }
 
 export default api

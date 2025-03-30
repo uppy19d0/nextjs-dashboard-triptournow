@@ -1,4 +1,50 @@
 {
+    "actions":{
+      "label": "Actions",
+      "add": "Add",
+      "edit": "Edit",
+      "delete": "Delete",
+      "submit": "Submit",
+      "submitting": "Submitting...",
+      "reset": "Reset"
+    },
+    "users": {
+      "title": "Users",
+      "add_new": "Add new",
+      "attribute": {
+        "firstName": "Name",
+        "lastName": "Last name",
+        "phone": "Phone",
+        "verification_status": "Verification status",
+        "email": "Email",
+        "role": "Role",
+        "status": "Status",
+        "date": "Registration date"
+      }
+    },
+    "posts": {
+      "title": "Offers",
+      "add_new": "Add new",
+      "attribute": {
+        "title": "Title",
+        "description": "Description",
+        "category": "Category",
+        "status": "Status",
+        "date": "Publication date"
+      }
+    },
+    "reservations": {
+      "title": "Reservations",
+      "add_new": "Add new",
+      "attribute": {
+        "name": "Name",
+        "email": "Email",
+        "phone": "Phone",
+        "date": "Reservation date",
+        "time": "Reservation time",
+        "status": "Status"
+      }
+    }, 
   "login": {
     "title": "Login",
     "description": "Sign in to your account",
@@ -272,7 +318,12 @@
   "sidebar": {
     "items": {
       "dashboard": "Dashboard",
+      "home": "Home",
+      "users": "Users",
+      "posts": "Offers",
+      "reservations": "Reservations",
       "sample": "Sample",
+      "page": "Pages",
       "theme": "Theme",
       "colors": "Colors",
       "typography": "Typography",

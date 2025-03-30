@@ -48,7 +48,7 @@ export default async function HeaderNotificationNav() {
   return (
     <Nav>
       <NavItem className="d-none d-sm-block">
-        <Dropdown>
+        {/* <Dropdown>
           <DropdownToggle className="px-2 mx-1 px-sm-3 mx-sm-0" as={NavLink} bsPrefix="hide-caret" id="dropdown-notification">
             <FontAwesomeIcon icon={faBell} size="lg" />
             <Badge pill bg="danger" className="position-absolute top-0 end-0 px-1 px-sm-2">
@@ -141,10 +141,10 @@ export default async function HeaderNotificationNav() {
               </DropdownItem>
             </Link>
           </DropdownMenu>
-        </Dropdown>
+        </Dropdown> */}
       </NavItem>
       <NavItem className="d-none d-sm-block">
-        <Dropdown>
+        {/* <Dropdown>
           <DropdownToggle className="px-2 mx-1 px-sm-3 mx-sm-0" as={NavLink} bsPrefix="hide-caret" id="dropdown-task">
             <FontAwesomeIcon icon={faList} size="lg" />
             <Badge pill bg="warning" className="position-absolute top-0 end-0 px-1 px-sm-2">
@@ -227,10 +227,10 @@ export default async function HeaderNotificationNav() {
             </Link>
 
           </DropdownMenu>
-        </Dropdown>
+        </Dropdown> */}
       </NavItem>
       <NavItem className="d-none d-sm-block">
-        <Dropdown>
+        {/* <Dropdown>
           <DropdownToggle className="px-2 mx-1 px-sm-3 mx-sm-0" as={NavLink} bsPrefix="hide-caret" id="dropdown-mail">
             <FontAwesomeIcon icon={faEnvelope} size="lg" />
             <Badge pill bg="primary" className="position-absolute top-0 end-0 px-1 px-sm-2">
@@ -358,7 +358,7 @@ export default async function HeaderNotificationNav() {
               </DropdownItem>
             </Link>
           </DropdownMenu>
-        </Dropdown>
+        </Dropdown> */}
       </NavItem>
       <NavItem>
         <HeaderLocale currentLocale={getLocale()} />

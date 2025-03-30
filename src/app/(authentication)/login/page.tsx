@@ -10,7 +10,7 @@ export default async function Page({ searchParams }: { searchParams: SearchParam
 
   const getCallbackUrl = () => {
     if (!callbackUrl) {
-      return '/' // Default redirect to home page
+      return '/' 
     }
 
     return callbackUrl.toString()
@@ -33,11 +33,11 @@ export default async function Page({ searchParams }: { searchParams: SearchParam
             className="bg-primary text-white d-flex align-items-center justify-content-center p-5"
           >
             <div className="text-center">
-              <h2>{dict.login.signup.title}</h2>
+              {/* <h2>{dict.login.signup.title}</h2>
               <p>{dict.login.signup.description}</p>
               <Link className="btn btn-lg btn-outline-light mt-3" href="/register">
                 {dict.signup.register_now}
-              </Link>
+              </Link> */}
             </div>
           </Col>
         </Row>

@@ -118,9 +118,9 @@ export default function Login({ callbackUrl }: { callbackUrl: string }) {
             </Button>
           </Col>
           <Col xs={6} className="text-end">
-            <Link className="px-0" href="#">
+            {/* <Link className="px-0" href="#">
               {dict.login.forgot_password}
-            </Link>
+            </Link> */}
           </Col>
         </Row>
       </Form>

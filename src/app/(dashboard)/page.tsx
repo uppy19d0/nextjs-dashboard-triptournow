@@ -331,7 +331,7 @@ export default async function Page() {
         </CardFooter>
       </Card>
 
-      <div className="row">
+      {/* <div className="row">
         <div className="col-sm-6 col-lg-4">
           <Card
             className="mb-4"
@@ -431,7 +431,7 @@ export default async function Page() {
           </Card>
         </div>
 
-      </div>
+      </div> */}
 
       <div className="row">
         <div className="col-md-12">
