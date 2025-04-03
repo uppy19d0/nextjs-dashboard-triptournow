@@ -1,4 +1,4 @@
-import { apiService } from '../authService/apis'
+import { apiService } from '../services/apis'
 import { Posts } from '@/models/posts/posts';
 
 export const getPosts = async (): Promise<Posts[]> => {

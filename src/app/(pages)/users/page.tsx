@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react'
-import { getUsers } from '@/app/api/users/users'
+import { getUsers } from '@/app/api/services/users/userssevices'
 import { User } from '@/models/users/users'
 import UsersTable from './UsersTable'
 // import { getDictionary } from '@/locales/dictionary'
@@ -15,6 +15,7 @@ export default function Page() {
     const fetchUsers = async () => {
       try {
         const response = await getUsers()
+        console.log("🚀 ~ fetchUsers ~ response:", response)
         setUsers(response)
       } catch (error) {
         console.error('Error fetching users:', error)

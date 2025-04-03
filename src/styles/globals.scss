@@ -9,3 +9,92 @@ $enable-negative-margins: true;
 @import "layout/sidebar";
 
 @import "_custom";
+
+
+.ReactModal__Overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+  }
+  
+  .ReactModal__Content {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    padding: 30px;
+    border-radius: 15px;
+    max-width: 600px;
+    width: 90%;
+    box-shadow: 0px 15px 50px rgba(0, 0, 0, 0.3);
+    position: relative;
+    text-align: center;
+    color: white;
+  }
+  
+  .ReactModal__Content h3 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .ReactModal__Content .button-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: #f0f0f0;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  .ReactModal__Content .button-close:hover {
+    color: #ff4747;
+  }
+  
+  /* Botones dentro del Modal */
+  .ReactModal__Content .btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 10px;
+    display: inline-block;
+  }
+  
+  /* Botón de Verificar */
+  .ReactModal__Content .btn-verify {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .ReactModal__Content .btn-verify:hover {
+    background-color: #45a049;
+  }
+  
+  /* Botón de Cancelar */
+  .ReactModal__Content .btn-cancel {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .ReactModal__Content .btn-cancel:hover {
+    background-color: #e53935;
+  }
+  
+  /* Botón de Cerrar */
+  .ReactModal__Content .btn-close-modal {
+    background-color: #616161;
+    color: white;
+  }
+  
+  .ReactModal__Content .btn-close-modal:hover {
+    background-color: #757575;
+  }
+  

@@ -1,7 +1,7 @@
 import { NextAuthOptions, User } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { getDictionary } from '@/locales/dictionary'
-import { apiService } from '@/app/api/authService/apis' // Asegúrate de importar apiService correctamente
+import { apiService } from '@/app/api/services/apis' // Asegúrate de importar apiService correctamente
 
 export const authOptions: NextAuthOptions = {
   callbacks: {

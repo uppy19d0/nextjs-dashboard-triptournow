@@ -1,5 +1,5 @@
 import { Reservations } from '@/models/reservations/reservations';
-import { apiService } from '../authService/apis'
+import { apiService } from '../services/apis'
 
 export const getReservations = async (): Promise<Reservations[]> => {
   const response = await apiService.get<{ status: string; data: Reservations[] }>('/reservations')
