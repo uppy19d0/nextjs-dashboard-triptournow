@@ -8,12 +8,13 @@ import Modal from "react-modal";
 
 
 type Props = {
-  posts: Posts[]
+  posts: Posts[],
+   onVerify: (user: Posts) => void;
 }
 
 const POSTS_PER_PAGE = 10
 
-export default function PostTable({ posts }: Props) {
+export default function PostTable({ posts,onVerify }: Props) {
   const [currentPage, setCurrentPage] = useState(1);
    const [selectPost, setselectPost] = useState<Posts | null>(null);
    const [isModalOpen, setIsModalOpen] = useState(false);
@@ -45,7 +46,10 @@ export default function PostTable({ posts }: Props) {
    });
  
 
- 
+   const verifiedAndCancel = async  (post: Posts) => {
+     onVerify(post);
+   };
+
 
   return (
     <div className="p-6 bg-gray-900 rounded-xl shadow-lg text-white">
@@ -138,14 +142,14 @@ export default function PostTable({ posts }: Props) {
 
                     {post.status === "active" ? (
                       <button
-                      //  onClick={() => verifiedAndCancel(user)}
+                        onClick={() => verifiedAndCancel(post)}
                         className="btn btn-danger m-1"
                       >
                         Cancelar
                       </button>
                     ) : (
                       <button
-                       // onClick={() => verifiedAndCancel(user)}
+                        onClick={() => verifiedAndCancel(post)}
                         className="btn btn-info m-1"
                       >
                         Verificar
