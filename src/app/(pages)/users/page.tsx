@@ -29,14 +29,20 @@ export default function Page() {
   // ✅ Función para verificar usuario y actualizar lista
   const verifiedAndCancel = async (user: User) => {
     try {
-      await changeVerificationStatus(user.id, "verified")
-      alert('Estado de verificación actualizado con éxito')
-      fetchUsers() // 🔄 Actualiza la lista después de la verificación
+      // Determinar el nuevo estado basado en el estado actual
+      const newStatus = user.verification_status === "verified" ? "cancel" : "verified";
+  
+      await changeVerificationStatus(user.id, newStatus);
+  
+      alert(`Estado de verificación actualizado a ${newStatus} con éxito`);
+  
+      fetchUsers(); // 🔄 Actualiza la lista después de la verificación
     } catch (error) {
-      console.error('Error al cambiar el estado de verificación:', error)
-      alert('Hubo un error al actualizar el estado')
+      console.error("Error al cambiar el estado de verificación:", error);
+      alert("Hubo un error al actualizar el estado");
     }
-  }
+  };
+  
 
   return (
     <div className="p-6 min-h-screen bg-gray-900">

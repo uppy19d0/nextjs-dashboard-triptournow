@@ -75,6 +75,7 @@ export default function UsersTable({ users,onVerify  }: Props) {
             <option value="">Todos</option>
             <option value="admin">Administrador</option>
             <option value="user">Usuario</option>
+            <option value="seller">vendedor</option>
           </select>
         </div>
       </div>
