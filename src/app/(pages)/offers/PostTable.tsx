@@ -15,7 +15,7 @@ const POSTS_PER_PAGE = 10
 
 export default function PostTable({ posts }: Props) {
   const [currentPage, setCurrentPage] = useState(1);
-   const [selectedUser, setSelectedUser] = useState<Posts | null>(null);
+   const [selectPost, setselectPost] = useState<Posts | null>(null);
    const [isModalOpen, setIsModalOpen] = useState(false);
    const [filterStatus, setFilterStatus] = useState("");
    const [filterType, setFilterType] = useState(""); // Estado para filtro de tipo
@@ -27,17 +27,17 @@ export default function PostTable({ posts }: Props) {
    }, []);
  
    const openModal = (posts: Posts) => {
-     setSelectedUser(posts);
+     setselectPost(posts);
      setIsModalOpen(true);
    };
  
    const closeModal = () => {
-     setSelectedUser(null);
+     setselectPost(null);
      setIsModalOpen(false);
    };
  
    // Filtrado de usuarios basado en status y tipo
-   const filteredUsers = posts.filter((post) => {
+   const filteredPosts = posts.filter((post) => {
      const statusMatch =
        filterStatus === "" || post.status === filterStatus;
  
@@ -101,7 +101,7 @@ export default function PostTable({ posts }: Props) {
           </tr>
         </thead>
         <tbody className="bg-gray-900 divide-y divide-gray-700">
-          {filteredUsers
+          {filteredPosts
             .slice(
               (currentPage - 1) * POSTS_PER_PAGE,
               currentPage * POSTS_PER_PAGE
@@ -174,12 +174,12 @@ export default function PostTable({ posts }: Props) {
           setCurrentPage((prev) =>
             Math.min(
               prev + 1,
-              Math.ceil(filteredUsers.length / POSTS_PER_PAGE)
+              Math.ceil(filteredPosts.length / POSTS_PER_PAGE)
             )
           )
         }
         disabled={
-          currentPage === Math.ceil(filteredUsers.length / POSTS_PER_PAGE)
+          currentPage === Math.ceil(filteredPosts.length / POSTS_PER_PAGE)
         }
         className="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded disabled:opacity-40"
       >
@@ -195,7 +195,7 @@ export default function PostTable({ posts }: Props) {
       className="modal-content" // Tu clase personalizada para el contenido
       overlayClassName="modal-overlay" // Tu clase personalizada para el overlay
     >
-      {selectedUser && (
+      {selectPost && (
         <>
           <button
             onClick={closeModal}
@@ -206,28 +206,28 @@ export default function PostTable({ posts }: Props) {
           <h3 className="text-xl font-semibold mb-4">Detalle del Usuario</h3>
           <div className="space-y-2 text-sm">
             <p>
-              <strong>Nombre:</strong> {selectedUser.title}{" "}
-              {selectedUser.subTitle}
+              <strong>Nombre:</strong> {selectPost.title}{" "}
+              {selectPost.subTitle}
             </p>
             <p>
-              <strong>Email:</strong> {selectedUser.user.email}
+              <strong>Email:</strong> {selectPost.user.email}
             </p>
             <p>
-              <strong>Estado:</strong> {selectedUser.status}
+              <strong>Estado:</strong> {selectPost.status}
             </p>
             <p>
-              <strong>Tipo:</strong> {selectedUser.bought}
+              <strong>Tipo:</strong> {selectPost.bought}
             </p>
             <p>
-              <strong>cumpleaños:</strong> {selectedUser.description}
+              <strong>cumpleaños:</strong> {selectPost.description}
             </p>
 
             <p>
-              <strong>teléfono:</strong> {selectedUser.expire_date}
+              <strong>teléfono:</strong> {selectPost.expire_date}
             </p>
           </div>
           <div className="mt-4 flex justify-end gap-2">
-            {selectedUser.status === "active" ? (
+            {selectPost.status === "active" ? (
               <button className="px-4 py-2 bg-red-600 hover:bg-red-700 rounded text-sm">
                 Cancelar
               </button>
