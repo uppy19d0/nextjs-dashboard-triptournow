@@ -14,6 +14,8 @@ export default function Page() {
     const fetchUsers = async () => {
       try {
         const response = await getPosts()
+
+        debugger;
         setPosts(response)
       } catch (error) {
         console.error('Error fetching users:', error)

@@ -21,3 +21,10 @@ export const changeVerificationStatus = async (
   );
   return response.data;
 };
+
+export const getUserById = async (id: string): Promise<User> => {
+  const response = await apiService.get<{ status: string; data: User }>(
+    `/admin/user/${id}`
+  );
+  return response.data; // Retorna directamente el objeto usuario
+};
