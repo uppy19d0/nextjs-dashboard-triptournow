@@ -5,14 +5,16 @@ import { useRouter } from "next/navigation";
 import Modal from "react-modal";
 import { Eye, Pencil, X } from "lucide-react";
 import { User } from "@/models/users/users";
+import { changeVerificationStatus } from "@/app/api/services/users/userssevices";
 
 type Props = {
   users: User[];
+  onVerify: (user: User) => void;
 };
 
 const USERS_PER_PAGE = 10;
 
-export default function UsersTable({ users }: Props) {
+export default function UsersTable({ users,onVerify  }: Props) {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -42,6 +44,10 @@ export default function UsersTable({ users }: Props) {
     const typeMatch = filterType === "" || user.type === filterType;
     return statusMatch && typeMatch;
   });
+
+  const verifiedAndCancel = async  (user: User) => {
+    onVerify(user);
+  };
 
   return (
     <div className="p-6 bg-gray-900 rounded-xl shadow-lg text-white">
@@ -126,10 +132,26 @@ export default function UsersTable({ users }: Props) {
 
                       <button
                         onClick={() => router.push(`/users/${user.id}/edit`)}
-                        className="btn btn-danger m-1"
+                        className="btn btn-warning m-1"
                       >
                         <Pencil size={16} className="mr-2" /> Editar
                       </button>
+
+                      {user.verification_status === "verified" ? (
+                        <button
+                          onClick={() => verifiedAndCancel(user)}
+                          className="btn btn-danger m-1"
+                        >
+                          Cancelar
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => verifiedAndCancel(user)}
+                          className="btn btn-info m-1"
+                        >
+                          Verificar
+                        </button>
+                      )}
                     </div>
                   </td>
                 </tr>
@@ -151,10 +173,15 @@ export default function UsersTable({ users }: Props) {
         <button
           onClick={() =>
             setCurrentPage((prev) =>
-              Math.min(prev + 1, Math.ceil(filteredUsers.length / USERS_PER_PAGE))
+              Math.min(
+                prev + 1,
+                Math.ceil(filteredUsers.length / USERS_PER_PAGE)
+              )
             )
           }
-          disabled={currentPage === Math.ceil(filteredUsers.length / USERS_PER_PAGE)}
+          disabled={
+            currentPage === Math.ceil(filteredUsers.length / USERS_PER_PAGE)
+          }
           className="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded disabled:opacity-40"
         >
           Siguiente
@@ -191,6 +218,13 @@ export default function UsersTable({ users }: Props) {
               </p>
               <p>
                 <strong>Tipo:</strong> {selectedUser.type}
+              </p>
+              <p>
+                <strong>cumpleaños:</strong> {selectedUser.birthday}
+              </p>
+
+              <p>
+                <strong>teléfono:</strong> {selectedUser.phone}
               </p>
             </div>
             <div className="mt-4 flex justify-end gap-2">
