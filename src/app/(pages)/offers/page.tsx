@@ -19,8 +19,8 @@ export default function Page() {
   const fetchPosts = async () => {
     try {
       const response = await getPosts()
-
-      debugger;
+      console.log("🚀 ~ fetchPosts ~ response:", response)
+    
       setPosts(response)
     } catch (error) {
       console.error('Error fetching Posts:', error)

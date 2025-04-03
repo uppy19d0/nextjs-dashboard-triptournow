@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { Eye, Pencil, X } from 'lucide-react'
 import { Posts } from '@/models/posts/posts'
 import Modal from "react-modal";
+import Image from "next/image"
 
 
 type Props = {
@@ -208,6 +209,9 @@ export default function PostTable({ posts,onVerify }: Props) {
             <X size={20} />
           </button>
           <h3 className="text-xl font-semibold mb-4">Detalle del Usuario</h3>
+          
+          
+          
           <div className="space-y-2 text-sm">
             <p>
               <strong>Nombre:</strong> {selectPost.title}{" "}
