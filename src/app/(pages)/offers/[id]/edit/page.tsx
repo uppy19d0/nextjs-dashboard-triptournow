@@ -14,7 +14,7 @@ const schema = z.object({
   title: z.string().min(1, "El título es requerido"),
   subTitle: z.string().min(1, "El subtítulo es requerido"),
   description: z.string().min(1, "La descripción es requerida"),
-  price: z.string().min(1, "El precio es requerido"),
+  price: z.number().min(0, "El precio debe ser un número válido"),
   expire_date: z.string().min(1, "La fecha de expiración es requerida"),
   status: z.string().min(1, "El estado es requerido"),
   established_quantity: z.string().min(1, "La cantidad establecida es requerida"),
@@ -45,12 +45,13 @@ export default function EditOfferPage() {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const post: Posts = await getPostById(id as string);
+        const posts: any = await getPostById(id as string);
+        const post = posts[0];
         setValue("id", post.id);
         setValue("title", post.title);
         setValue("subTitle", post.subTitle);
         setValue("description", post.description);
-        setValue("price", post.price.toString());
+        setValue("price", post.price);
         setValue("expire_date", post.expire_date);
         setValue("status", post.status);
         setValue("established_quantity", post.established_quantity?.toString() ?? "");
@@ -67,8 +68,10 @@ export default function EditOfferPage() {
 
   const onSubmit = async (data: FormValues) => {
     try {
-      await updatePost(id as string, data);
+      await updatePost(data);
       alert("✅ Oferta actualizada correctamente");
+      const { id, ...updatedData } = data;
+      console.log("Updated data without ID:", updatedData);
       // router.push("/offers");
     } catch (error) {
       console.error("Error al actualizar la oferta:", error);
