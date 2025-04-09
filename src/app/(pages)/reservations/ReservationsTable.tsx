@@ -13,7 +13,7 @@ type Props = {
 
 const RESERVATIONS_PER_PAGE = 10
 
-export default function ReservationsTable({ reservations, onVerify }: Props) {
+export default function ReservationsTable({ reservations }: Props) {
   const [currentPage, setCurrentPage] = useState(1)
   const [selectedReservation, setSelectedReservation] = useState<Reservations | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -43,9 +43,7 @@ export default function ReservationsTable({ reservations, onVerify }: Props) {
     currentPage * RESERVATIONS_PER_PAGE
   )
 
-  const handleVerify = (reservation: Reservations) => {
-    onVerify(reservation)
-  }
+
 
   return (
     <div className="p-6 bg-gray-900 rounded-xl shadow-lg text-white">
