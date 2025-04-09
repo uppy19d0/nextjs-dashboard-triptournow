@@ -20,3 +20,13 @@ export const changeVerificationStatus = async (
   );
   return response.data;
 };
+
+export const getPostById = async (id: number): Promise<Posts> => {
+  const response = await apiService.get<{ status: string; data: Posts }>(`/post/${id}`)
+  return response?.data[0];
+}
+
+export const updatePost = async (id: number, data: Partial<Posts>): Promise<Posts> => {
+  const response = await apiService.post<{ status: string; data: Posts }>(`/post/update`, data)
+  return response.data
+}

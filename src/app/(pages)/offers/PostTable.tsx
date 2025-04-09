@@ -56,7 +56,7 @@ export default function PostTable({ posts,onVerify }: Props) {
     <div className="p-6 bg-gray-900 rounded-xl shadow-lg text-white">
     {/* Lista de usuarios y filtros */}
     <div className="flex justify-between items-center mb-4">
-      <h2 className="text-2xl font-bold">Lista de Usuarios</h2>
+      <h2 className="text-2xl font-bold">Lista de Ofertas</h2>
       <div className="flex gap-4">
         {/* Filtro de Estado */}
         <select
@@ -135,7 +135,7 @@ export default function PostTable({ posts,onVerify }: Props) {
                     </button>
 
                     <button
-                      onClick={() => router.push(`/users/${post.id}/edit`)}
+                      onClick={() => router.push(`/offers/${post.id}/edit`)}
                       className="btn btn-warning m-1"
                     >
                       <Pencil size={16} className="mr-2" /> Editar
