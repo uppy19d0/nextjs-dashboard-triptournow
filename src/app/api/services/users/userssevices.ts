@@ -26,5 +26,20 @@ export const getUserById = async (id: string): Promise<User> => {
   const response = await apiService.get<{ status: string; data: User }>(
     `/admin/user/${id}`
   );
-  return response.data; // Retorna directamente el objeto usuario
+  return response.data;
+};
+
+
+export const updateUser = async (id: string | number, data: Partial<User>) => {
+  try {
+    const response = await apiService.put<{ status: string; data: User }>(
+      `/admin/users/${id}`,
+      data
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error("Error en updateUser:", error);
+    throw error;
+  }
 };
