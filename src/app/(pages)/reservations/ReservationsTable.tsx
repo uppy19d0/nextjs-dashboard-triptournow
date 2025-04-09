@@ -8,7 +8,6 @@ import { Reservations } from '@/models/reservations/reservations'
 
 type Props = {
   reservations: Reservations[],
-  onVerify: (reservation: Reservations) => void
 }
 
 const RESERVATIONS_PER_PAGE = 10
