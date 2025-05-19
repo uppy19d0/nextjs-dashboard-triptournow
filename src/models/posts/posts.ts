@@ -14,6 +14,8 @@ type User = {
     description: string
     phone: string | null
     address: string | null
+    created_at: string
+    updated_at: string
     expire_date: string
     price: number
     bought: number
