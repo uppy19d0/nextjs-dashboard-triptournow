@@ -62,8 +62,8 @@ export default function UsersTable({ users, onVerify }: Props) {
         return matchesStatus && matchesType && matchesSearch;
       })
       .sort((a, b) => {
-        const aVal = a[sortColumn];
-        const bVal = b[sortColumn];
+        const aVal = a[sortColumn] as any;
+        const bVal = b[sortColumn] as any;
 
         if (aVal == null) return 1;
         if (bVal == null) return -1;
