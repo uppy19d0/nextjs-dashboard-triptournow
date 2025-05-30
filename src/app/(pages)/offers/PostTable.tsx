@@ -3,6 +3,8 @@ import { useRouter } from 'next/navigation'
 import { Eye, Pencil, X, ChevronUp, ChevronDown, Check, AlertTriangle } from 'lucide-react'
 import { Posts } from '@/models/posts/posts'
 import Modal from 'react-modal'
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination } from 'swiper/modules';
 
 type Props = {
   posts: Posts[]
@@ -154,7 +156,8 @@ export default function PostTable({ posts, onVerify }: Props) {
                 <td className="px-3 py-2 text-sm capitalize">{post.status}</td>
                 <td className="px-3 py-2 text-sm">
                   <div className="flex space-x-2">
-                    <button onClick={() => openDetail(post)} className="btn btn-info px-3 py-2 rounded-lg shadow"><Eye size={16} /></button>
+                  <button onClick={() => router.push(`/offers/${post.id}/show`)} className="btn btn-info px-3 py-2 rounded-lg shadow"><Eye size={16} /></button>
+                    {/* <button onClick={() => openDetail(post)} className="btn btn-info px-3 py-2 rounded-lg shadow"><Eye size={16} /></button> */}
                     <button onClick={() => router.push(`/offers/${post.id}/edit`)} className="btn btn-warning px-3 py-2 rounded-lg shadow"><Pencil size={16} /></button>
                     <button
                       onClick={() => openConfirm(post, post.status === 'active' ? 'cancel' : 'verify')}
@@ -186,24 +189,7 @@ export default function PostTable({ posts, onVerify }: Props) {
       </div>
 
       {/* Detalle Modal */}
-      <Modal
-        isOpen={isDetailModalOpen}
-        onRequestClose={closeDetail}
-        className="modal-content p-4 bg-gray-800 rounded shadow-lg text-white max-w-sm mx-auto"
-        overlayClassName="modal-overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
-      >
-        {selectedPost && (
-          <>
-            <button onClick={closeDetail} className="absolute top-2 right-3 text-gray-400 hover:text-red-500"><X size={20}/></button>
-            <h3 className="text-xl font-semibold mb-2">Detalle Oferta</h3>
-            <p><strong>Nombre:</strong> {selectedPost.title}{selectedPost.subTitle && ` - ${selectedPost.subTitle}`}</p>
-            <p><strong>Email:</strong> {selectedPost.user.email}</p>
-            <p><strong>Estado:</strong> {selectedPost.status}</p>
-            <p><strong>Creado:</strong> {formatDate(selectedPost.created_at)}</p>
-            <p><strong>Actualizado:</strong> {formatDate(selectedPost.updated_at)}</p>
-          </>
-        )}
-      </Modal>
+   
 
       <Modal
         isOpen={isConfirmOpen}

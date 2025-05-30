@@ -52,7 +52,7 @@ export default function EditOfferPage() {
         setValue("subTitle", post.subTitle);
         setValue("description", post.description);
         setValue("price", post.price);
-        setValue("expire_date", post.expire_date);
+        setValue("expire_date", formatDateForInput(post.expire_date));
         setValue("status", post.status);
         setValue("established_quantity", post.established_quantity?.toString() ?? "");
         setValue("cancellation_time", post.cancellation_time?.toString() ?? "");
@@ -77,6 +77,10 @@ export default function EditOfferPage() {
       console.error("Error al actualizar la oferta:", error);
       alert("❌ Error al actualizar la oferta");
     }
+  };
+
+  const formatDateForInput = (datetimeString: string) => {
+    return datetimeString.split(" ")[0];
   };
 
   if (loading) {
@@ -140,13 +144,18 @@ export default function EditOfferPage() {
         </div>
 
         <div className="mb-3">
-          <label className="form-label">Fecha de expiración</label>
+          <label htmlFor="expire_date" className="form-label">Fecha de expiración</label>
           <input
             type="date"
+            id="expire_date"
             className={`form-control ${errors.expire_date ? "is-invalid" : ""}`}
             {...register("expire_date")}
           />
-          {errors.expire_date && <div className="invalid-feedback">{errors.expire_date.message}</div>}
+          {errors.expire_date && (
+            <div className="invalid-feedback">
+              {errors.expire_date.message}
+            </div>
+          )}
         </div>
 
         <div className="mb-3">
@@ -183,6 +192,7 @@ export default function EditOfferPage() {
             <option value="active">Activa</option>
             <option value="inactive">Inactiva</option>
             <option value="pending">Pendiente</option>
+            <option value="draft">Borrador</option>
           </select>
           {errors.status && <div className="invalid-feedback">{errors.status.message}</div>}
         </div>

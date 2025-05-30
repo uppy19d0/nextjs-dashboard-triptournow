@@ -4,6 +4,9 @@ import { changeVerificationStatus, getPosts } from '@/app/api/services/posts/pos
 import { Posts } from '@/models/posts/posts';
 import { useEffect, useState } from 'react'
 import PostTable from './PostTable';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
 export default function Page() {
   const [posts, setPosts] = useState<Posts[]>([])
