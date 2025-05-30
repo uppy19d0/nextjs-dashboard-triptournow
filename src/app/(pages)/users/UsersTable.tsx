@@ -134,7 +134,7 @@ export default function UsersTable({ users, onVerify }: Props) {
                 { key: "email", label: "Correo" },
                 { key: "verification_status", label: "Estado" },
                 { key: "type", label: "Tipo" },
-                { key: "createdAt", label: "Creado" },
+                { key: "created_at", label: "Creado" },
               ].map((col) => (
                 <th
                   key={col.key}
@@ -153,7 +153,7 @@ export default function UsersTable({ users, onVerify }: Props) {
             </tr>
           </thead>
           <tbody className="bg-gray-900 divide-y divide-gray-700">
-            {paginatedUsers.map((user) => (
+            {paginatedUsers.map((user: User) => (
               <tr key={user.id} className="hover:bg-gray-800 transition">
                 <td className="px-4 py-3 text-sm">{user.firstName} {user.lastName}</td>
                 <td className="px-4 py-3 text-sm">{user.email}</td>
