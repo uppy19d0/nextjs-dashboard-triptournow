@@ -16,7 +16,8 @@ import {
   faUsers, 
   faTags, 
   faCalendarCheck,
-  faHouse
+  faHouse,
+  faHandsHolding
 } from '@fortawesome/free-solid-svg-icons'
 import React, { PropsWithChildren } from 'react'
 import { Badge } from 'react-bootstrap'
@@ -62,6 +63,11 @@ export default async function SidebarNav() {
       <SidebarNavItem icon={faCalendarCheck} href="/reservations">
       <span className="me-2">{dict.sidebar.items.reservations}</span>
       <small className="ms-auto"><Badge bg="danger">{dict.sidebar.items.reservations}</Badge></small>
+      </SidebarNavItem>
+
+      <SidebarNavItem icon={faFileLines} href="/categories">
+      <span className="me-2">{dict.sidebar.items.categories}</span>
+      <small className="ms-auto"><Badge bg="danger">{dict.sidebar.items.categories}</Badge></small>
       </SidebarNavItem>
 
       {/* <SidebarNavItem icon={faGauge} href="/">

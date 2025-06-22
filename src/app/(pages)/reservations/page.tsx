@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import ReservationsTable from './ReservationsTable';
 import { Reservations } from '@/models/reservations/reservations';
-import { getReservations } from '@/app/api/reservations/reservations';
+import { getReservations } from '@/app/api/services/reservations/reservations';
 
 export default function Page() {
   const [reservations, setReservation] = useState<Reservations[]>([])

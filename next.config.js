@@ -1,22 +1,25 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const path = require('path')
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  sassOptions: {
-    includePaths: [path.join(__dirname, 'styles')],
-  },
+
   images: {
+    // Si sólo necesitas HTTPS:
+    domains: ['triptournow.com'],
+
+    // O, si tu URL es HTTP o quieres mayor control, usa remotePatterns:
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'img.pokemondb.net',
+        protocol: 'http',
+        hostname: 'triptournow.com',
         port: '',
+        pathname: '/storage/categories/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'triptournow.com',
+        port: '',
+        pathname: '/storage/categories/**',
       },
     ],
   },
