@@ -43,8 +43,8 @@ export default function CreateCategoryPage() {
     formData.append('image', imageFile, imageFile.name);
 
     try {
-      const cat: Category = await createCategory(formData);
-      router.push(`/categories/${cat.id}/show`);
+      await createCategory(formData);
+      router.push(`/categories`);
     } catch (err: any) {
       setError(err.message || 'Error al crear la categoría.');
     } finally {
