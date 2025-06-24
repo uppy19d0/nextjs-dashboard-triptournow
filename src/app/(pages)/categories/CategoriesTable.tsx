@@ -1,3 +1,5 @@
+'use client'
+
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { Eye, Pencil } from 'lucide-react'
@@ -5,25 +7,27 @@ import { CategoriesTableProps } from '@/models/categories/categories'
 
 const ITEMS_PER_PAGE = 10
 
-export default function CategoriesTable({ categories }: CategoriesTableProps) {
+export default function CategoriesTable({ categories = [] }: CategoriesTableProps) {
   const [currentPage, setCurrentPage] = useState(1)
   const [searchTerm, setSearchTerm] = useState<string>('')
   const router = useRouter()
 
+  // Al cambiar el término de búsqueda, volvemos a la página 1
   useEffect(() => {
     setCurrentPage(1)
   }, [searchTerm])
 
+  // Filtrado según título EN o ES
   const filtered = categories.filter(({ title, title_es }) => {
     const term = searchTerm.toLowerCase()
     return (
       title.toLowerCase().includes(term) ||
       title_es?.toLowerCase().includes(term) ||
-      !term
+      term === ''
     )
   })
 
-  const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE)
+  const totalPages = Math.max(1, Math.ceil(filtered.length / ITEMS_PER_PAGE))
   const currentItems = filtered.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE
@@ -124,12 +128,12 @@ export default function CategoriesTable({ categories }: CategoriesTableProps) {
           Anterior
         </button>
         <span>
-          Página {currentPage} de {totalPages || 1}
+          Página {currentPage} de {totalPages}
         </span>
         <button
           type="button"
           onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
-          disabled={currentPage === totalPages || totalPages === 0}
+          disabled={currentPage === totalPages}
           className="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded disabled:opacity-40"
         >
           Siguiente

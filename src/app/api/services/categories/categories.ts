@@ -5,7 +5,7 @@ import { CategorysResponse } from '@/models/categories/categories'
 
 
 export async function getCategories(): Promise<CategorysResponse> {
-  const response = await apiService.get<CategorysResponse>('/categories')
+  const response = await apiService.get<CategorysResponse>('/categories/show/all')
   console.debug('[getCategories] raw response:', response)
   return response
 }
@@ -26,15 +26,17 @@ export async function createCategory(
 
 export async function updateCategory(
   id: number,
-  payload: Partial<Category>
+  form: FormData
 ): Promise<CategoryResponse> {
-  const response = await apiService.put<CategoryResponse>(
+  console.log('updateCategory', id, JSON.stringify(form))
+  const response = await apiService.post<CategoryResponse>(
     `/categories/${id}`,
-    payload
+    form
   )
   console.debug(`[updateCategory ${id}] raw response:`, response)
   return response
 }
+
 
 export async function deleteCategory(id: number): Promise<void> {
   const response = await apiService.delete<void>(`/categories/${id}`)

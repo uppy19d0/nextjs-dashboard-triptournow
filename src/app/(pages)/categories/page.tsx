@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback } from 'react';
 import { getCategories } from '@/app/api/services/categories/categories';
-import { Categories } from '@/models/categories/categories';
+import { Category } from '@/models/categories/categories';
 import CategoriesTable from './CategoriesTable';
 
 function Spinner() {
@@ -28,7 +28,7 @@ function ErrorAlert({ message, onRetry }: { message: string; onRetry: () => void
 }
 
 export default function CategoriesPage() {
-  const [categories, setCategories] = useState<Categories[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
