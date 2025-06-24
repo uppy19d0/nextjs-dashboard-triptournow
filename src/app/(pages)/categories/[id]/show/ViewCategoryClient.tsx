@@ -6,9 +6,17 @@ import Image from 'next/image'
 import type { Category } from '@/models/categories/categories'
 import { Pencil, Eye, AlertCircle } from 'lucide-react'
 
-function InfoCard({ label, children }: { label: string; children: React.ReactNode }) {
+function InfoCard({
+  label,
+  children,
+  className,
+}: {
+  label: string
+  children: React.ReactNode
+  className?: string
+}) {
   return (
-    <div className="p-4 bg-gray-800 rounded-lg">
+    <div className={`p-4 bg-gray-800 rounded-lg ${className ?? ''}`}>
       <div className="text-gray-400 text-sm">{label}</div>
       <div className="text-lg">{children}</div>
     </div>
