@@ -2,21 +2,34 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Eye, Pencil, Plus } from 'lucide-react'
+import { Eye, Pencil, Plus, Trash2 } from 'lucide-react'
 import { CategoriesTableProps } from '@/models/categories/categories'
+import { deleteCategory } from '@/app/api/services/categories/categories'
 
 const ITEMS_PER_PAGE = 10
 
 export default function CategoriesTable({ categories = [] }: CategoriesTableProps) {
   const [currentPage, setCurrentPage] = useState(1)
   const [searchTerm, setSearchTerm] = useState<string>('')
+  const [cats, setCats] = useState(categories)
   const router = useRouter()
 
   useEffect(() => {
     setCurrentPage(1)
   }, [searchTerm])
 
-  const filtered = categories.filter(({ title, title_es }) => {
+  const handleDelete = async (id: number) => {
+    if (!confirm('¿Seguro que quieres eliminar esta categoría?')) return
+    try {
+      await deleteCategory(id)
+      setCats(prev => prev.filter(c => c.id !== id))
+    } catch (err) {
+      console.error('Error borrando categoría', err)
+      alert('No se pudo eliminar la categoría.')
+    }
+  }
+
+  const filtered = cats.filter(({ title, title_es }) => {
     const term = searchTerm.toLowerCase()
     return (
       title.toLowerCase().includes(term) ||
@@ -74,7 +87,7 @@ export default function CategoriesTable({ categories = [] }: CategoriesTableProp
           </thead>
 
           <tbody className="divide-y divide-gray-700">
-            {currentItems.map((cat) => (
+            {currentItems.map(cat => (
               <tr key={cat.id} className="hover:bg-gray-800 transition-colors">
                 <td className="px-4 py-3 text-sm truncate">
                   {cat.title_es ?? cat.title}
@@ -111,6 +124,14 @@ export default function CategoriesTable({ categories = [] }: CategoriesTableProp
                   >
                     <Pencil size={16} />
                   </button>
+                  <button
+                    type="button"
+                    onClick={() => handleDelete(cat.id)}
+                    aria-label="Eliminar categoría"
+                    className="btn btn-danger px-2 py-1 rounded flex items-center"
+                  >
+                    <Trash2 size={16} />
+                  </button>
                 </td>
               </tr>
             ))}
@@ -129,7 +150,7 @@ export default function CategoriesTable({ categories = [] }: CategoriesTableProp
       <div className="mt-6 flex justify-between items-center text-sm text-gray-300">
         <button
           type="button"
-          onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+          onClick={() => setCurrentPage(p => Math.max(p - 1, 1))}
           disabled={currentPage === 1}
           className="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded disabled:opacity-40"
         >
@@ -140,7 +161,7 @@ export default function CategoriesTable({ categories = [] }: CategoriesTableProp
         </span>
         <button
           type="button"
-          onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+          onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))}
           disabled={currentPage === totalPages}
           className="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded disabled:opacity-40"
         >
