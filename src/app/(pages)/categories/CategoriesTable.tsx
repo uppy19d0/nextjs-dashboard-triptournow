@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { Eye, Pencil } from 'lucide-react'
+import { Eye, Pencil, Plus } from 'lucide-react'
 import { CategoriesTableProps } from '@/models/categories/categories'
 
 const ITEMS_PER_PAGE = 10
@@ -12,12 +12,10 @@ export default function CategoriesTable({ categories = [] }: CategoriesTableProp
   const [searchTerm, setSearchTerm] = useState<string>('')
   const router = useRouter()
 
-  // Al cambiar el término de búsqueda, volvemos a la página 1
   useEffect(() => {
     setCurrentPage(1)
   }, [searchTerm])
 
-  // Filtrado según título EN o ES
   const filtered = categories.filter(({ title, title_es }) => {
     const term = searchTerm.toLowerCase()
     return (
@@ -44,14 +42,24 @@ export default function CategoriesTable({ categories = [] }: CategoriesTableProp
     <section className="p-6 bg-gray-900 rounded-xl shadow-lg text-white">
       <header className="flex items-center justify-between mb-4">
         <h2 className="text-2xl font-bold">Categorías</h2>
-        <input
-          type="text"
-          placeholder="Buscar..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="p-2 bg-gray-800 text-white rounded-md border border-gray-600 w-1/3"
-          aria-label="Buscar categorías"
-        />
+        <div className="flex space-x-2 w-1/3">
+          <input
+            type="text"
+            placeholder="Buscar..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="flex-grow p-2 bg-gray-800 text-white rounded-md border border-gray-600"
+            aria-label="Buscar categorías"
+          />
+          <button
+            type="button"
+            onClick={() => router.push('/categories/create')}
+            className="flex items-center px-4 py-2 bg-green-600 hover:bg-green-500 rounded-md transition"
+          >
+            <Plus size={16} className="mr-2" />
+            Crear categoría
+          </button>
+        </div>
       </header>
 
       <div className="overflow-x-auto rounded-lg border border-gray-700">

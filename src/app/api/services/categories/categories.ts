@@ -16,13 +16,22 @@ export async function getCategoryById(id: number): Promise<CategoryResponse> {
   return response
 }
 
-export async function createCategory(
-  payload: Partial<Category>
-): Promise<CategoryResponse> {
-  const response = await apiService.post<CategoryResponse>('/categories', payload)
-  console.debug('[createCategory] raw response:', response)
-  return response
+export async function createCategory(data: FormData) {
+  const res = await fetch('https://triptournow.com/api/V1/categories', {
+    method: 'POST',
+    body: data,
+    credentials: 'include', // incluir cookies de sesión
+  });
+  if (res.status === 302) {
+    throw new Error('Redirigido: verifica tu autenticación o la URL de la API');
+  }
+  if (!res.ok) {
+    const err = await res.json();
+    throw new Error(err.message || 'Error al crear categoría');
+  }
+  return res.json();
 }
+
 
 export async function updateCategory(
   id: number,

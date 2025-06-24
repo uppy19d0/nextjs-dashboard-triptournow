@@ -1,179 +1,160 @@
-'use client'
+'use client';
 
-import { useState, ChangeEvent } from 'react'
-import { useRouter } from 'next/navigation'
-import { createCategory } from '@/app/api/services/categories/categories'
-import type { Category } from '@/models/categories/categories'
+import { useState, ChangeEvent } from 'react';
+import { useRouter } from 'next/navigation';
+import { ImagePlus, ArrowLeft, Check } from 'lucide-react';
+import { createCategory } from '@/app/api/services/categories/categories';
+import type { Category } from '@/models/categories/categories';
 
 export default function CreateCategoryPage() {
-  const router = useRouter()
-  const [titleEn, setTitleEn] = useState('')
-  const [titleEs, setTitleEs] = useState('')
-  const [descriptionEn, setDescriptionEn] = useState('')
-  const [descriptionEs, setDescriptionEs] = useState('')
-  const [imageFile, setImageFile] = useState<File | null>(null)
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null)
-  const [error, setError] = useState<string | null>(null)
-  const [loading, setLoading] = useState(false)
+  const router = useRouter();
+  const [titleEn, setTitleEn] = useState('');
+  const [titleEs, setTitleEs] = useState('');
+  const [descEn, setDescEn] = useState('');
+  const [descEs, setDescEs] = useState('');
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [preview, setPreview] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  const MAX_SIZE_MB = 2
+  const MAX_MB = 2;
 
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setError(null)
-    const file = e.target.files?.[0] ?? null
-    if (!file) {
-      setImageFile(null)
-      setPreviewUrl(null)
-      return
-    }
-    if (!file.type.startsWith('image/')) {
-      setError('Solo se permiten imágenes.')
-      setImageFile(null)
-      setPreviewUrl(null)
-      return
-    }
-    if (file.size > MAX_SIZE_MB * 1024 * 1024) {
-      setError(`La imagen no puede superar ${MAX_SIZE_MB} MB.`)
-      setImageFile(null)
-      setPreviewUrl(null)
-      return
-    }
-    setImageFile(file)
-    setPreviewUrl(URL.createObjectURL(file))
-  }
+  const handleFile = (e: ChangeEvent<HTMLInputElement>) => {
+    setError(null);
+    const file = e.target.files?.[0] || null;
+    if (!file) return setPreview(null);
+    if (!file.type.startsWith('image/')) return setError('Debe subir una imagen.');
+    if (file.size > MAX_MB * 1e6) return setError(`La imagen no puede superar ${MAX_MB} MB.`);
+    setImageFile(file);
+    setPreview(URL.createObjectURL(file));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!titleEn.trim()) {
-      setError('El título en inglés es obligatorio.')
-      return
-    }
-    setLoading(true)
-    setError(null)
+    e.preventDefault();
+    if (!titleEn.trim()) return setError('El título en inglés es obligatorio.');
+    if (!imageFile) return setError('La imagen es obligatoria.');
+
+    setLoading(true);
+    const formData = new FormData();
+    formData.append('title_en', titleEn);
+    formData.append('title_es', titleEs);
+    formData.append('description_en', descEn);
+    formData.append('description_es', descEs);
+    formData.append('image', imageFile, imageFile.name);
 
     try {
-      const form = new FormData()
-      form.append('title_en', titleEn)
-      form.append('title_es', titleEs)
-      form.append('description_en', descriptionEn)
-      form.append('description_es', descriptionEs)
-      if (imageFile) form.append('image', imageFile)
-
-      const newCat: Category = await createCategory(form)
-      router.push(`/categories/${newCat.id}/show`)
-    } catch (err) {
-      console.error(err)
-      setError('Error al crear la categoría.')
+      const cat: Category = await createCategory(formData);
+      router.push(`/categories/${cat.id}/show`);
+    } catch (err: any) {
+      setError(err.message || 'Error al crear la categoría.');
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
-    <div className="max-w-lg mx-auto p-6 bg-gray-900 rounded-xl shadow-lg text-white mt-8">
-      <h1 className="text-2xl font-bold mb-6">Crear nueva categoría</h1>
+    <div className="container mt-5">
+      <form
+        onSubmit={handleSubmit}
+        encType="multipart/form-data"
+        className="p-4 rounded shadow-lg"
+        style={{ backgroundColor: 'var(--bs-body-bg)', color: 'var(--bs-body-color)' }}
+      >
+        <div className="d-flex align-items-center mb-4">
+          <button type="button" onClick={() => router.back()} className="btn btn-link text-decoration-none me-2">
+            <ArrowLeft />
+          </button>
+          <h2 className="m-0">Crear Categoría</h2>
+        </div>
 
-      {error && <p className="mb-4 text-red-400">{error}</p>}
+        {error && <div className="alert alert-danger">{error}</div>}
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label htmlFor="title-en" className="block text-sm mb-1">
-            Título (EN) *
-          </label>
+        {/* Título EN */}
+        <div className="mb-3">
+          <label htmlFor="titleEn" className="form-label">Título (Inglés) *</label>
           <input
-            id="title-en"
+            id="titleEn"
+            name="title_en"
             type="text"
+            className={`form-control ${error && !titleEn.trim() ? 'is-invalid' : ''}`}
             value={titleEn}
-            onChange={(e) => setTitleEn(e.target.value)}
-            className="w-full p-2 bg-gray-800 rounded border border-gray-600"
-            required
+            onChange={e => setTitleEn(e.target.value)}
+            placeholder="Ej. Electronics"
           />
+          {!titleEn.trim() && error && <div className="invalid-feedback">El título en inglés es requerido.</div>}
         </div>
 
-        <div>
-          <label htmlFor="title-es" className="block text-sm mb-1">
-            Título (ES)
-          </label>
+        {/* Título ES */}
+        <div className="mb-3">
+          <label htmlFor="titleEs" className="form-label">Título (Español)</label>
           <input
-            id="title-es"
+            id="titleEs"
+            name="title_es"
             type="text"
+            className="form-control"
             value={titleEs}
-            onChange={(e) => setTitleEs(e.target.value)}
-            className="w-full p-2 bg-gray-800 rounded border border-gray-600"
+            onChange={e => setTitleEs(e.target.value)}
+            placeholder="Ej. Electrónica"
           />
         </div>
 
-        <div>
-          <label htmlFor="desc-en" className="block text-sm mb-1">
-            Descripción (EN)
-          </label>
+        {/* Descripción ES */}
+        <div className="mb-3">
+          <label htmlFor="descEs" className="form-label">Descripción (Español)</label>
           <textarea
-            id="desc-en"
-            value={descriptionEn}
-            onChange={(e) => setDescriptionEn(e.target.value)}
-            className="w-full p-2 bg-gray-800 rounded border border-gray-600"
+            id="descEs"
+            name="description_es"
+            className="form-control"
             rows={3}
+            value={descEs}
+            onChange={e => setDescEs(e.target.value)}
+            placeholder="Descripción en español"
           />
         </div>
 
-        <div>
-          <label htmlFor="desc-es" className="block text-sm mb-1">
-            Descripción (ES)
-          </label>
+        {/* Descripción EN */}
+        <div className="mb-3">
+          <label htmlFor="descEn" className="form-label">Descripción (Inglés)</label>
           <textarea
-            id="desc-es"
-            value={descriptionEs}
-            onChange={(e) => setDescriptionEs(e.target.value)}
-            className="w-full p-2 bg-gray-800 rounded border border-gray-600"
+            id="descEn"
+            name="description_en"
+            className="form-control"
             rows={3}
+            value={descEn}
+            onChange={e => setDescEn(e.target.value)}
+            placeholder="Descripción en inglés"
           />
         </div>
 
-        <div>
-          <label htmlFor="image-upload" className="block text-sm mb-1">
-            Imagen (max {MAX_SIZE_MB} MB)
-          </label>
+        {/* Imagen */}
+        <div className="mb-3">
+          <label htmlFor="image" className="form-label">Imagen <span className="text-danger">*</span></label>
           <input
-            id="image-upload"
+            id="image"
             name="image"
             type="file"
             accept="image/*"
-            onChange={handleFileChange}
-            className="block w-full text-gray-200
-               file:mr-2 file:py-2 file:px-4 file:rounded file:border-0
-               file:text-sm file:font-semibold file:bg-blue-600 file:text-white
-               hover:file:bg-blue-500"
+            onChange={handleFile}
+            className={`form-control ${error && !preview ? 'is-invalid' : ''}`}
           />
+          {error && !preview && <div className="invalid-feedback">{error}</div>}
         </div>
 
-        {previewUrl && (
-          <div className="mt-4">
-            <p className="text-gray-200 mb-1">Vista previa:</p>
-            <img
-              src={previewUrl}
-              alt="Preview"
-              className="w-full h-auto rounded shadow-md"
-            />
-          </div>
-        )}
-
-        <div className="flex justify-between items-center">
-          <button
-            type="button"
-            onClick={() => router.back()}
-            className="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded"
-          >
-            Cancelar
-          </button>
-          <button
-            type="submit"
-            disabled={loading}
-            className="px-6 py-2 bg-green-600 hover:bg-green-500 rounded text-white disabled:opacity-50"
-          >
-            {loading ? 'Creando…' : 'Crear Categoría'}
-          </button>
+        {/* Preview */}
+        <div className="mb-4 text-center">
+          {preview ? (
+            <img src={preview} alt="Vista previa" className="rounded" style={{ maxWidth: 200 }} />
+          ) : (
+            <div className="border rounded d-inline-flex align-items-center justify-content-center" style={{ width: 200, height: 150, color: '#888' }}>
+              Sin imagen
+            </div>
+          )}
         </div>
+
+        <button type="submit" className="btn btn-primary w-100" disabled={loading}>
+          {loading ? 'Creando…' : <><Check className="me-2" />Guardar</>}
+        </button>
       </form>
     </div>
-  )
+  );
 }
