@@ -14,7 +14,7 @@ const schema = z.object({
   title: z.string().min(1, "El título es requerido"),
   subTitle: z.string().min(1, "El subtítulo es requerido"),
   description: z.string().min(1, "La descripción es requerida"),
-  price: z.number().min(0, "El precio debe ser un número válido"),
+  price: z.string().min(0, "El precio debe ser un número válido"),
   expire_date: z.string().min(1, "La fecha de expiración es requerida"),
   status: z.string().min(1, "El estado es requerido"),
   established_quantity: z.string().min(1, "La cantidad establecida es requerida"),
