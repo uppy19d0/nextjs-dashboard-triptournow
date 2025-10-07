@@ -15,7 +15,7 @@ const schema = z.object({
   subTitle: z.string().min(1, "El subtítulo es requerido"),
   description: z.string().min(1, "La descripción es requerida"),
   price: z.coerce.number({ invalid_type_error: "El precio debe ser un número válido" })
-           .min(0.01, "El precio debe ser mayor a 0"),
+       .min(0.01, "El precio debe ser mayor a 0"),
   expire_date: z.string().min(1, "La fecha de expiración es requerida"),
   status: z.string().min(1, "El estado es requerido"),
   established_quantity: z.string().min(1, "La cantidad establecida es requerida"),
