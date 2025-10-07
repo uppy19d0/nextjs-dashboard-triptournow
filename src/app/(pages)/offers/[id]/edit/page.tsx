@@ -14,7 +14,8 @@ const schema = z.object({
   title: z.string().min(1, "El título es requerido"),
   subTitle: z.string().min(1, "El subtítulo es requerido"),
   description: z.string().min(1, "La descripción es requerida"),
-  price: z.string().min(1, "El precio debe ser un número válido"),
+  price: z.coerce.number({ invalid_type_error: "El precio debe ser un número válido" })
+           .min(0.01, "El precio debe ser mayor a 0"),
   expire_date: z.string().min(1, "La fecha de expiración es requerida"),
   status: z.string().min(1, "El estado es requerido"),
   established_quantity: z.string().min(1, "La cantidad establecida es requerida"),
@@ -51,7 +52,7 @@ export default function EditOfferPage() {
         setValue("title", post.title);
         setValue("subTitle", post.subTitle);
         setValue("description", post.description);
-        setValue("price", post.price);
+        setValue("price", Number(post.price));
         setValue("expire_date", formatDateForInput(post.expire_date));
         setValue("status", post.status);
         setValue("established_quantity", post.established_quantity?.toString() ?? "");
