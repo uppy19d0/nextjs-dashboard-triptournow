@@ -135,8 +135,9 @@ export default function EditOfferPage() {
         </div>
 
         <div className="mb-3">
-          <label className="form-label">Precio</label>
+          <label className="form-label">Precio.</label>
           <input
+             step="0.01" 
             type="number"
             className={`form-control ${errors.price ? "is-invalid" : ""}`}
             {...register("price")}
