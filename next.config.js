@@ -10,19 +10,19 @@ const nextConfig = {
   },
   images: {
     // Si sólo necesitas HTTPS:
-    domains: ['triptournow.com'],
+    domains: ['api.triptournow.com'],
 
     // O, si tu URL es HTTP o quieres mayor control, usa remotePatterns:
     remotePatterns: [
       {
         protocol: 'http',
-        hostname: 'triptournow.com',
+        hostname: 'api.triptournow.com',
         port: '',
         pathname: '/storage/categories/**',
       },
       {
         protocol: 'https',
-        hostname: 'triptournow.com',
+        hostname: 'api.triptournow.com',
         port: '',
         pathname: '/storage/categories/**',
       },

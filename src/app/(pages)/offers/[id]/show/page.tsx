@@ -9,7 +9,7 @@ import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 
-const API_BASE = 'https://triptournow.com/public/images/'
+const API_BASE = 'https://api.triptournow.com/public/images/'
 
 export default function ViewOfferPage() {
   const { id } = useParams()

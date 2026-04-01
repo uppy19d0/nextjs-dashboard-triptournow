@@ -44,7 +44,7 @@ export default function EditCategoryPage() {
   useEffect(() => {
     async function loadCategory() {
       try {
-        const resp = await fetch(`https://triptournow.com/api/V1/categories/${id}`);
+        const resp = await fetch(`https://api.triptournow.com/api/V1/categories/${id}`);
         const data = await resp.json();
         setValue('title_en', data.title_en);
         setValue('title_es', data.title_es);
@@ -92,7 +92,7 @@ export default function EditCategoryPage() {
     if (file) formData.append('image', file, file.name);
 
     try {
-      const resp = await fetch(`https://triptournow.com/api/V1/categories/${id}`, {
+      const resp = await fetch(`https://api.triptournow.com/api/V1/categories/${id}`, {
         method: 'POST',
         body: formData,
       });

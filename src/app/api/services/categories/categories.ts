@@ -17,7 +17,7 @@ export async function getCategoryById(id: number): Promise<CategoryResponse> {
 }
 
 export async function createCategory(data: FormData) {
-  await fetch('https://triptournow.com/api/V1/categories', {
+  await fetch('https://api.triptournow.com/api/V1/categories', {
     method: 'POST',
     body: data,
   });

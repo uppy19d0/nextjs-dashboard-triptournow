@@ -2,7 +2,7 @@ import axios, { AxiosInstance, AxiosResponse } from 'axios'
 import { getSession } from 'next-auth/react'
 
 const api: AxiosInstance = axios.create({
-  baseURL: 'https://triptournow.com/api/V1', // Base URL de tu API
+  baseURL: 'https://api.triptournow.com/api/V1', // Base URL de tu API
   headers: {
     'Content-Type': 'application/json',
   },
